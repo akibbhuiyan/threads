@@ -19,6 +19,9 @@ import Image from "next/image";
 import { Textarea } from "../ui/textarea";
 import { isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadthing";
+import { updateUser } from "@/lib/actions/user.action";
+import { usePathname, useRouter } from "next/navigation";
+
 interface Props {
   user: {
     id: string;
@@ -33,6 +36,9 @@ interface Props {
 const AccountProfile = ({ user, btnTitle }: Props) => {
   const [file, setFile] = useState<File[]>([]);
   const { startUpload } = useUploadThing("media");
+
+  const route = useRouter();
+  const pathname = usePathname();
 
   const form = useForm({
     resolver: zodResolver(UserValidation),
@@ -75,6 +81,15 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       }
     }
     // Update user profile
+
+    await updateUser({
+      userId: user.id,
+      username: values.username,
+      name: values.name,
+      bio: values.bio,
+      image: values.profile_photo,
+      path: pathname,
+    });
   };
   return (
     <Form {...form}>
