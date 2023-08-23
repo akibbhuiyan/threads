@@ -3,7 +3,7 @@
 // Above article shows why we need webhooks i.e., to sync data to our backend
 
 // Resource: https://docs.svix.com/receiving/verifying-payloads/why
-// It's a good practice to verify webhooks. Above article shows why we should do it
+// It's a good practice to verify webhoaoks. Above article shows why we should do it
 import { Webhook, WebhookRequiredHeaders } from "svix";
 import { headers } from "next/headers";
 
