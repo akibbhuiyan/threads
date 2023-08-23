@@ -3,8 +3,9 @@ import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { fetchUser } from "@/lib/actions/user.action";
 import ProfileHeader from "@/components/shared/ProfileHeader";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { profileTabs } from "@/constants";
+import ThreadsTab from "@/components/shared/ThreadsTab";
 
 async function Page({ params }: { params: { id: string } }) {
   if (!params.id) return null;
@@ -12,7 +13,6 @@ async function Page({ params }: { params: { id: string } }) {
   if (!user) return null;
 
   const userInfo = await fetchUser(params.id);
-  console.log(userInfo);
 
   if (!userInfo?.onboarded) redirect("/onboarding");
 
@@ -47,6 +47,19 @@ async function Page({ params }: { params: { id: string } }) {
               </TabsTrigger>
             ))}
           </TabsList>
+          {profileTabs.map((tab) => (
+            <TabsContent
+              key={`content-${tab.label}`}
+              value={tab.value}
+              className="w-full text-light-1"
+            >
+              <ThreadsTab
+                currentUserId={user.id}
+                accountId={userInfo.id}
+                accountType="User"
+              />
+            </TabsContent>
+          ))}
         </Tabs>
       </div>
     </section>
