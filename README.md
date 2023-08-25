@@ -6,7 +6,6 @@
 
 # Threads - A Social Media Platform Clone
 
-![Threads Preview](https://threads-two-zeta.vercel.app/).
 
 Threads is a social media platform clone inspired by Threads, allowing users to post tweets, comment on posts, join communities, and more. The project is built using Next.js 13, Clerk for authentication, and Tailwind CSS for styling.
 
