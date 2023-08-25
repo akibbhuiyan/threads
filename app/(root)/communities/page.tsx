@@ -8,8 +8,13 @@ import ThreadsTab from "@/components/shared/ThreadsTab";
 import UserCard from "@/components/cards/UserCard";
 import { fetchCommunities } from "@/lib/actions/community.actions";
 import CommunityCard from "@/components/cards/CommunityCard";
+import Searchbar from "@/components/shared/SearchBar";
 
-async function Page() {
+async function Page({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) {
   const user = await currentUser();
   if (!user) return null;
 
@@ -17,16 +22,15 @@ async function Page() {
   if (!userInfo?.onboarded) redirect("/onboarding");
 
   const result = await fetchCommunities({
-    searchString: "",
-    pageNumber: 1,
+    searchString: searchParams.q,
+    pageNumber: searchParams?.page ? +searchParams.page : 1,
     pageSize: 25,
   });
-
   return (
     <section>
       <h1 className="head-text">Search</h1>
       {/* Search */}
-
+      <Searchbar routeType="communities" />
       <div className="mt-14 flex flex-col gap-9">
         {result.communities.length === 0 ? (
           <p className="no-result">No communities</p>

@@ -39,7 +39,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
         {thread.children.map((childItem: any) => (
           <ThreadCard
             id={childItem._id}
-            currentUserId={childItem?.id || ""}
+            currentUserId={user.id}
             parentId={childItem.parentId}
             content={childItem.text}
             author={childItem.author}
